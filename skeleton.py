@@ -1,10 +1,13 @@
+# !/usr/bin/env python3
 import rospy
 import numpy as np
 import cv2
+import time
 
 from sensor_msgs.msg import Image, CompressedImage
 from cv_bridge import CvBridge, CvBridgeError
 from std_msgs.msg import Header
+
 
 class DetermineColor:
     def __init__(self):
@@ -17,8 +20,6 @@ class DetermineColor:
         try:
             # listen image topic
             image = self.bridge.imgmsg_to_cv2(data, 'bgr8')
-            cv2.imshow('Image', image)
-            cv2.waitKey(1)
             # prepare rotate_cmd msg
             # DO NOT DELETE THE BELOW THREE LINES!
             msg = Header()
@@ -34,7 +35,7 @@ class DetermineColor:
            
     # 이미지를 그레이스케일로 변환
             src = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            _, src_bin = cv2.threshold(src, 65, 255, cv2.THRESH_BINARY)
+            _, src_bin = cv2.threshold(src, 66, 255, cv2.THRESH_BINARY)
             contours, _ = cv2.findContours(src_bin, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
 
             h, w = src.shape[:2]
@@ -83,10 +84,7 @@ class DetermineColor:
                     W=W+1
 
    
-            print("B=",B)
-            print("R=",R)
-            print("W=",W)
-            cv2.imshow('src_bin',mask)
+
 
            
 
