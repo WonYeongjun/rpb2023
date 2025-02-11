@@ -6,8 +6,6 @@ def main():
     
     print("%d + %d = %d" % (x, y, add(x, y)))    
     
-
-# TODO: add() 함수 정의
 def add(x,y):
     return x+y
     
